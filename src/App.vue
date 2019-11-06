@@ -29,8 +29,7 @@
               </div>
           </div>  
 
-          <notes :notes="notesFilter" :grid="grid" @remove="removeNote"/>
-          
+          <notes :notes="notesFilter" :grid="grid" @remove="removeNote"/> 
         </div>
       </section>
     </div>
@@ -55,30 +54,34 @@ export default {
     search
   },
   data() {
-    return {
+    return { 
       title: 'Notes App',
       message: null,
       search: '',
       grid: true,
       note: {
           title: '',
-          descr: ''
+          descr: '',
+          type: 'standart'
       },
       notes: [
           {
               title: 'First Note',
               descr: 'Desription for first note',
-              date: new Date(Date.now()).toLocaleString()
+              date: new Date(Date.now()).toLocaleString(),
+              type: 'standart'
           },
           {
               title: 'Second Note',
               descr: 'Desription for second note',
-              date: new Date(Date.now()).toLocaleString()
+              date: new Date(Date.now()).toLocaleString(),
+              type: 'standart'
           },
           {
               title: 'Third Note',
               descr: 'Desription for third note',
-              date: new Date(Date.now()).toLocaleString()
+              date: new Date(Date.now()).toLocaleString(),
+              type: 'standart'
           }
       ]
     }
@@ -103,8 +106,8 @@ export default {
   },
   methods:{
     addNote(){
-        let {title, descr} = this.note
-
+        let {title, descr, type} = this.note
+        this.we  = type
         if (title === "") { 
             this.message = "Заголовок не может быть пустым!"
             return false
@@ -114,11 +117,13 @@ export default {
             // По ES6 ключ и значения совпадают - можно опускать
             title,
             descr,
-            date: new Date(Date.now()).toLocaleString()
+            date: new Date(Date.now()).toLocaleString(),
+            type,
         })
         this.message = null;
         this.note.title = ''
         this.note.descr = ''
+        this.note.type = 'standart'
     },
     removeNote(index){
       this.notes.splice(index,1)
