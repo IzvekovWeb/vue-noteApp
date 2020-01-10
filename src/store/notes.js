@@ -19,7 +19,21 @@ export default {
         date: new Date(Date.now()).toLocaleString(),
         type: 'standart'
       }
-  ]
+    ],
+    noteType: [
+      {
+        type: 'standart',
+        name: 'Стандартное'
+      },
+      {
+        type: 'warning',
+        name: 'Внимание'
+      },
+      {
+        type: 'important',
+        name: 'Важное'
+      }
+    ]
   },
   mutations: {
     addNote(state, payload) {
@@ -54,6 +68,10 @@ export default {
         }
       })
       return showList
+    },
+
+    getNoteType (state) {
+      return state.noteType
     }
-  },
+  }
 }

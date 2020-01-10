@@ -29,7 +29,7 @@
               </div>
           </div>  
 
-          <notes :notes="notesFilter" :grid="grid" @remove="removeNote"/> 
+          <notes :notes="notesFilter" :grid="grid"/> 
         </div>
       </section>
     </div>
@@ -70,11 +70,6 @@ export default {
   computed:{
     notesFilter(){ 
       return this.$store.getters.getFilteredNotes(this.search) 
-    }
-  },
-  methods:{  
-    removeNote(index){ 
-      this.$store.dispatch('deleteNote', index)
     }
   }
 } 

@@ -2,11 +2,11 @@
     <div class="notes"> 
         <div class="note" :class="[{ full: !grid}, note.type]"   v-for="(note, id) in notes" :key="id" >
             <div class="note-header" :class="{ full: !grid}">
-                <input class="noteTitleInput" type="text" ref="input{{id}}" v-model="note.title" @focus="saveText(note.title)" v-on:keyup.escape="returnText(note,'title'), $event.target.blur()"> 
+                <input class="noteTitleInput" type="text" ref="input{{id}}" v-model="note.title" @focus="saveText(note.title)" @keyup.escape="returnText(note,'title'), $event.target.blur()"> 
                 <p style="cursor: pointer" @click="remove(id)">X</p>
             </div>
             <div class="note-body">
-                <textarea class="noteDescrInput" type="text" ref="textarea" v-model="note.descr" @focus="saveText(note.descr)" v-on:keyup.escape="returnText(note,'descr'), $event.target.blur()"></textarea>
+                <textarea class="noteDescrInput" type="text" ref="textarea" v-model="note.descr" @focus="saveText(note.descr)" @keyup.escape="returnText(note,'descr'), $event.target.blur()"></textarea>
                 <span>{{ note.date }}</span> 
             </div>  
         </div>
@@ -33,12 +33,12 @@ export default {
         }
     },
     methods:{
-        remove(index){
-            this.$emit('remove',index)
+        remove(index){ 
+            this.$store.dispatch('deleteNote', index) 
         },
         saveText(text){
             this.oldText = text
-        }, 
+        },
         returnText(note,id){
             if (event.keyCode == 27 ){
                 if(id == 'title')

@@ -4,9 +4,7 @@
         <div class="input-block">
             <input v-model="note.title" type="text">
             <select v-model="note.type">
-                <option :value="noteType[0]">Обычный</option>
-                <option :value="noteType[1]">Важный</option>
-                <option :value="noteType[2]">Очень важный</option> 
+                <option :value="option.type" v-for="(option, index) in noteType" :key="index">{{option.name}}</option>
             </select> 
         </div>
         
@@ -26,12 +24,11 @@ export default {
     },
     data(){
         return{ 
-            noteType: ['standart','warning','important'], 
+            noteType: this.$store.getters.getNoteType, 
         }
     },
     methods:{
         addNote(){
-            // this.$emit('addNote', this.note)
             let {title, descr, type} = this.note
             this.we  = type
             if (title === "") { 
@@ -45,7 +42,6 @@ export default {
                 date: new Date(Date.now()).toLocaleString(),
                 type,
             })
-            console.log(this.$store.getters.getNotes)
         }
     }
 }
