@@ -10,7 +10,7 @@
 
           <message v-if="message" :message="message"/>
 
-          <newNote :note="note"  @addNote="addNote"/>
+          <newNote :note="note" />
             
 
           <div class="notes-header">
@@ -64,69 +64,17 @@ export default {
           descr: '',
           type: 'standart'
       },
-      notes: [
-          {
-              title: 'First Note',
-              descr: 'Desription for first note',
-              date: new Date(Date.now()).toLocaleString(),
-              type: 'standart'
-          },
-          {
-              title: 'Second Note',
-              descr: 'Desription for second note',
-              date: new Date(Date.now()).toLocaleString(),
-              type: 'standart'
-          },
-          {
-              title: 'Third Note',
-              descr: 'Desription for third note',
-              date: new Date(Date.now()).toLocaleString(),
-              type: 'standart'
-          }
-      ]
+      notes: this.$store.getters.getNotes
     }
   },
   computed:{
-    notesFilter(){
-      let array = this.notes,
-          search = this.search
-
-      if (!search) return array
-      // Small
-      search = search.trim().toLowerCase()
-      // Filter
-      array = array.filter(function (item) {
-        if (item.title.toLowerCase().indexOf(search) !== -1){
-          return item
-        }
-      })
-      // Error
-      return array
+    notesFilter(){ 
+      return this.$store.getters.getFilteredNotes(this.search) 
     }
   },
-  methods:{
-    addNote(){
-        let {title, descr, type} = this.note
-        this.we  = type
-        if (title === "") { 
-            this.message = "Заголовок не может быть пустым!"
-            return false
-        }
-
-        this.notes.push({
-            // По ES6 ключ и значения совпадают - можно опускать
-            title,
-            descr,
-            date: new Date(Date.now()).toLocaleString(),
-            type,
-        })
-        this.message = null;
-        this.note.title = ''
-        this.note.descr = ''
-        this.note.type = 'standart'
-    },
-    removeNote(index){
-      this.notes.splice(index,1)
+  methods:{  
+    removeNote(index){ 
+      this.$store.dispatch('deleteNote', index)
     }
   }
 } 

@@ -31,7 +31,21 @@ export default {
     },
     methods:{
         addNote(){
-            this.$emit('addNote', this.note)
+            // this.$emit('addNote', this.note)
+            let {title, descr, type} = this.note
+            this.we  = type
+            if (title === "") { 
+                this.message = "Заголовок не может быть пустым!"
+                return false
+            }
+
+            this.$store.dispatch('addNote', { 
+                title,
+                descr,
+                date: new Date(Date.now()).toLocaleString(),
+                type,
+            })
+            console.log(this.$store.getters.getNotes)
         }
     }
 }
